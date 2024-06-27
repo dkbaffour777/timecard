@@ -1,0 +1,40 @@
+.table-container {
+  width: 80vw;
+  display: flex;
+  height: 500px;
+}
+
+#fixed-column-table {
+  min-width: 20%;
+  height: 100%;
+}
+
+.fixed-column {
+  position: sticky;
+  left: 0;
+  background-color: white;
+  z-index: 1;
+  border-right: 1px solid #ddd;
+}
+
+#scrollable-container {
+  min-width: 80%;
+  overflow-x: scroll;
+  width: 100px;
+  height: 100%;
+}
+
+.scrollable-table {
+  min-width: 1800px;
+  height: 100%;
+}
+
+.scroll-column {
+    background-color: white;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
