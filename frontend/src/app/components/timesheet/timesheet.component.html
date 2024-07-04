@@ -1,3 +1,10 @@
+<div id="today-filter">
+  <small>Showing timecard for {{ today }}</small>
+  <mat-form-field style="font-size: 12px; height: 75px;">
+    <mat-label style="font-size: 14px;">Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Daniel" #input>
+  </mat-form-field>
+</div>
 <div class="table-container">
   <table mat-table [dataSource]="dataSource" id="fixed-column-table">
     <!-- Name Column (Fixed) -->
@@ -13,65 +20,143 @@
   </table>
 
   <div id="scrollable-container">
-      <table mat-table [dataSource]="dataSource" class="scrollable-table">
-        <!-- Remaining Columns -->
-        <ng-container matColumnDef="timeIn">
-          <th mat-header-cell *matHeaderCellDef>Time In</th>
-          <td mat-cell *matCellDef="let employee" class="scroll-column">{{ employee.timeIn }}</td>
-        </ng-container>
-    
-        <ng-container matColumnDef="break1out">
-          <th mat-header-cell *matHeaderCellDef>Break 1 Out</th>
-          <td mat-cell *matCellDef="let employee" class="scroll-column">{{ employee.break1out }}</td>
-        </ng-container>
-    
-        <ng-container matColumnDef="break1in">
-          <th mat-header-cell *matHeaderCellDef>Break 1 In</th>
-          <td mat-cell *matCellDef="let employee" class="scroll-column">{{ employee.break1in }}</td>
-        </ng-container>
-    
-        <ng-container matColumnDef="timeSpent1">
-          <th mat-header-cell *matHeaderCellDef>Time Spent 1</th>
-          <td mat-cell *matCellDef="let employee" class="scroll-column">{{ employee.timeSpent1() }}</td>
-        </ng-container>
-    
-        <ng-container matColumnDef="lunchOut">
-          <th mat-header-cell *matHeaderCellDef>Lunch Out</th>
-          <td mat-cell *matCellDef="let employee" class="scroll-column">{{ employee.lunchOut }}</td>
-        </ng-container>
-    
-        <ng-container matColumnDef="lunchIn">
-          <th mat-header-cell *matHeaderCellDef>Lunch In</th>
-          <td mat-cell *matCellDef="let employee" class="scroll-column">{{ employee.lunchIn }}</td>
-        </ng-container>
-    
-        <ng-container matColumnDef="timeSpent2">
-          <th mat-header-cell *matHeaderCellDef>Time Spent 2</th>
-          <td mat-cell *matCellDef="let employee" class="scroll-column">{{ employee.timeSpent2() }}</td>
-        </ng-container>
-    
-        <ng-container matColumnDef="break2out">
-          <th mat-header-cell *matHeaderCellDef>Break 2 Out</th>
-          <td mat-cell *matCellDef="let employee" class="scroll-column">{{ employee.break2out }}</td>
-        </ng-container>
-    
-        <ng-container matColumnDef="break2in">
-          <th mat-header-cell *matHeaderCellDef>Break 2 In</th>
-          <td mat-cell *matCellDef="let employee" class="scroll-column">{{ employee.break2in }}</td>
-        </ng-container>
-    
-        <ng-container matColumnDef="timeSpent3">
-          <th mat-header-cell *matHeaderCellDef>Time Spent 3</th>
-          <td mat-cell *matCellDef="let employee" class="scroll-column">{{ employee.timeSpent3() }}</td>
-        </ng-container>
-    
-        <ng-container matColumnDef="timeOut">
-          <th mat-header-cell *matHeaderCellDef>Time Out</th>
-          <td mat-cell *matCellDef="let employee" class="scroll-column">{{ employee.timeOut }}</td>
-        </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
+    <table mat-table [dataSource]="dataSource" class="scrollable-table">
+      <!-- Remaining Columns -->
+      <ng-container matColumnDef="timeIn">
+        <th mat-header-cell *matHeaderCellDef class="scroll-column-head">Time In</th>
+        <td mat-cell *matCellDef="let employee" class="scroll-column" (mouseover)="displayButton($event)" (mouseleave)="hideButton($event)">
+          <div>
+            @if(employee.timeIn) {
+              <span>{{ formatDate(employee.timeIn) }}</span>
+            }@else {
+              <span>{{ employee.timeIn }}</span>
+            }
+            <button mat-raised-button (click)="punch(employee, 'timeIn')">Punch</button>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="break1out">
+        <th mat-header-cell *matHeaderCellDef class="scroll-column-head">Break 1 Out</th>
+        <td mat-cell *matCellDef="let employee" class="scroll-column" (mouseover)="displayButton($event)" (mouseleave)="hideButton($event)">
+          <div>
+            @if(employee.break1out) {
+              <span>{{ formatDate(employee.break1out) }}</span>
+            }@else {
+              <span>{{ employee.break1out }}</span>
+            }
+            <button mat-raised-button (click)="punch(employee, 'break1out')">Punch</button>
+          </div>
+      </ng-container>
+
+      <ng-container matColumnDef="break1in">
+        <th mat-header-cell *matHeaderCellDef class="scroll-column-head">Break 1 In</th>
+        <td mat-cell *matCellDef="let employee" class="scroll-column" (mouseover)="displayButton($event)" (mouseleave)="hideButton($event)">
+          <div>
+            @if(employee.break1in) {
+              <span>{{ formatDate(employee.break1in) }}</span>
+            }@else {
+              <span>{{ employee.break1in }}</span>
+            }
+            <button mat-raised-button (click)="punch(employee, 'break1in')">Punch</button>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="timeSpent1">
+        <th mat-header-cell *matHeaderCellDef class="scroll-column-head">Time Spent - Break 1</th>
+        <td mat-cell *matCellDef="let employee" class="scroll-column">
+          {{ employee.timeSpent(employee.break1out, employee.break1in) }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lunchOut">
+        <th mat-header-cell *matHeaderCellDef class="scroll-column-head">Lunch Out</th>
+        <td mat-cell *matCellDef="let employee" class="scroll-column" (mouseover)="displayButton($event)" (mouseleave)="hideButton($event)">
+          <div>
+            @if(employee.lunchOut) {
+              <span>{{ formatDate(employee.lunchOut) }}</span>
+            }@else {
+              <span>{{ employee.lunchOut }}</span>
+            }
+            <button mat-raised-button (click)="punch(employee, 'lunchOut')">Punch</button>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lunchIn">
+        <th mat-header-cell *matHeaderCellDef class="scroll-column-head">Lunch In</th>
+        <td mat-cell *matCellDef="let employee" class="scroll-column" (mouseover)="displayButton($event)" (mouseleave)="hideButton($event)">
+          <div>
+            @if(employee.lunchIn) {
+              <span>{{ formatDate(employee.lunchIn) }}</span>
+            }@else {
+              <span>{{ employee.lunchIn }}</span>
+            }
+            <button mat-raised-button (click)="punch(employee, 'lunchIn')">Punch</button>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="timeSpent2">
+        <th mat-header-cell *matHeaderCellDef class="scroll-column-head">Time Spent - Break 2</th>
+        <td mat-cell *matCellDef="let employee" class="scroll-column">
+          {{ employee.timeSpent(employee.lunchOut, employee.lunchIn) }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="break2out">
+        <th mat-header-cell *matHeaderCellDef class="scroll-column-head">Break 2 Out</th>
+        <td mat-cell *matCellDef="let employee" class="scroll-column" (mouseover)="displayButton($event)" (mouseleave)="hideButton($event)">
+          <div>
+            @if(employee.break2out) {
+              <span>{{ formatDate(employee.break2out) }}</span>
+            }@else {
+              <span>{{ employee.break2out }}</span>
+            }
+            <button mat-raised-button (click)="punch(employee, 'break2out')">Punch</button>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="break2in">
+        <th mat-header-cell *matHeaderCellDef class="scroll-column-head">Break 2 In</th>
+        <td mat-cell *matCellDef="let employee" class="scroll-column" (mouseover)="displayButton($event)" (mouseleave)="hideButton($event)">
+          <div>
+            @if(employee.break2in) {
+              <span>{{ formatDate(employee.break2in) }}</span>
+            }@else {
+              <span>{{ employee.break2in }}</span>
+            }
+            <button mat-raised-button (click)="punch(employee, 'break2in')">Punch</button>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="timeSpent3">
+        <th mat-header-cell *matHeaderCellDef class="scroll-column-head">Time Spent - Break 3</th>
+        <td mat-cell *matCellDef="let employee" class="scroll-column">
+          {{ employee.timeSpent(employee.break2out, employee.break2in) }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="timeOut">
+        <th mat-header-cell *matHeaderCellDef class="scroll-column-head">Time Out</th>
+        <td mat-cell *matCellDef="let employee" class="scroll-column" (mouseover)="displayButton($event)" (mouseleave)="hideButton($event)">
+          <div>
+            @if(employee.timeOut) {
+              <span>{{ formatDate(employee.timeOut) }}</span>
+            }@else {
+              <span>{{ employee.timeOut }}</span>
+            }
+            <button mat-raised-button (click)="punch(employee, 'timeOut')">Punch</button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
   </div>
 </div>
+<mat-paginator [pageSizeOptions]="[5]" aria-label="Select page of users" style="width: 85vw;"></mat-paginator>

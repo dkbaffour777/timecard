@@ -1,12 +1,22 @@
+#today-filter {
+  display: flex;
+  width: 80vw;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
 .table-container {
   width: 80vw;
   display: flex;
-  height: 500px;
+  height: 400px;
 }
 
 #fixed-column-table {
-  min-width: 20%;
+  min-width: 300px;
   height: 100%;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 .fixed-column {
@@ -14,7 +24,7 @@
   left: 0;
   background-color: white;
   z-index: 1;
-  border-right: 1px solid #ddd;
+  border-right: 2px solid #ddd;
 }
 
 #scrollable-container {
@@ -25,16 +35,38 @@
 }
 
 .scrollable-table {
-  min-width: 1800px;
+  min-width: 2000px;
   height: 100%;
+  border-bottom: 1px solid #ddd;
+}
+
+.scroll-column-head {
+  border-right: 1px solid #ddd;
+  min-width: 380px;
 }
 
 .scroll-column {
-    background-color: white;
+  background-color: white;
+  border-right: 1px solid #ddd;
+}
+
+.scroll-column div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.scroll-column div button {
+  display: none;
 }
 
 .mat-mdc-row .mat-mdc-cell {
   border-bottom: 1px solid transparent;
   border-top: 1px solid transparent;
-  cursor: pointer;
+  background-color: unset;
+}
+
+.mat-mdc-row:nth-child(odd) {
+  background-color: rgba(36, 36, 36, 0.036);
 }
