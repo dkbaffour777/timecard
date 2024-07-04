@@ -1,0 +1,11 @@
+.header {
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    margin: auto 20px;
+}
+.manage {
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+}
