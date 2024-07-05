@@ -1,1 +1,39 @@
-<p>workstation works!</p>
+<div id="workstations-container">
+  <h4 style="font-weight: 100; text-align: center">Workstation Groups</h4>
+  <mat-toolbar id="workstation-header">
+    <button mat-icon-button matTooltip="Add Group" aria-label="group add">
+      <mat-icon>group_add</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Add Member" aria-label="person add">
+      <mat-icon>person_add</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      matTooltip="Remove Member"
+      aria-label="person remove"
+    >
+      <mat-icon>person_remove</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div id="wk-table-container">
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Group Name</th>
+          <td mat-cell *matCellDef="let group">
+            {{ group.name }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="members">
+          <th mat-header-cell *matHeaderCellDef>Group Members</th>
+          <td mat-cell *matCellDef="let group">
+            <span>{{ group.members.length }}</span>
+            <button mat-raised-button style="margin-left: 20px">Members</button>
+          </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+#workstations-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 35vw;
+  min-width: 400px;
+}
+#workstation-header {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+#wk-table-container {
+  height: 400px;
+  overflow: auto;
+}
+.mat-mdc-row {
+  height: 100px;
+}
+.mat-mdc-row:nth-child(odd) {
+  background-color: #ffff;
+}
