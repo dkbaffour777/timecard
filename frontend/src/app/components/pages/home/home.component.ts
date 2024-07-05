@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { HeaderComponent } from '../../header/header.component';
 import { TimesheetComponent } from '../timesheet/timesheet.component';
-import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-home',

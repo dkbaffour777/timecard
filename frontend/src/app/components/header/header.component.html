@@ -1,19 +1,14 @@
 <mat-toolbar class="header">
   <span>Timecard</span>
   <span class="manage">
-      <button
-        mat-icon-button
-        class="example-icon"
-        aria-label="Date today"
-      >
-        <mat-icon>today</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        class="example-icon"
-        aria-label="Account manager"
-      >
-        <mat-icon>person</mat-icon>
-      </button>
+      <nav>
+        <a mat-button routerLink="/home">Home</a>
+      </nav>
+    <button mat-icon-button aria-label="Date today">
+      <mat-icon>today</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Account manager">
+      <mat-icon>person</mat-icon>
+    </button>
   </span>
 </mat-toolbar>
