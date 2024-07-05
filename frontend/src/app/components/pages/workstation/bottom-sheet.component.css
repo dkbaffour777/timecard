@@ -1,0 +1,14 @@
+#member-list {
+    height: 500px;
+    overflow: auto;
+}
+.mtl-item-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 20px auto;
+}
+.mtl-item-title:nth-child(odd) {
+ background-color: rgba(36, 36, 36, 0.036);   
+}
