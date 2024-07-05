@@ -1,0 +1,8 @@
+.homepage-btn-container {
+    width: 22vw;
+    min-width: 250px;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    margin-top: 12vh;
+}
