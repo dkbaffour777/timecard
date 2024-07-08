@@ -1,72 +1,59 @@
+button {
+  font-size: 12px;
+  width: 50px;
+  align-self: flex-end;
+}
+#timecard-container {
+  width: 85vw;
+  display: flex;
+  flex-direction: column;
+}
 #today-filter {
   display: flex;
-  width: 80vw;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.table-container {
-  width: 80vw;
-  display: flex;
-  height: 400px;
-}
-
-#fixed-column-table {
-  min-width: 300px;
-  height: 100%;
-  border-left: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-}
-
-.fixed-column {
-  position: sticky;
-  left: 0;
-  background-color: white;
-  z-index: 1;
-  border-right: 2px solid #ddd;
-}
-
-#scrollable-container {
-  min-width: 80%;
-  overflow-x: scroll;
-  width: 100px;
-  height: 100%;
-}
-
-.scrollable-table {
-  min-width: 2000px;
-  height: 100%;
-  border-bottom: 1px solid #ddd;
-}
-
-.scroll-column-head {
-  border-right: 1px solid #ddd;
-  min-width: 380px;
-}
-
-.scroll-column {
-  background-color: white;
-  border-right: 1px solid #ddd;
-}
-
-.scroll-column div {
-  display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-bottom: 30px;
 }
-
+#form-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.mat-label {
+  font-size: 13px;
+}
+.table-container {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  overflow: hidden;
+}
+.scroll-column-head {
+  border-right: 1px solid #ddd;
+  min-width: 220px;
+}
+.scroll-column {
+  background-color: white;
+  border-right: 1px solid #ddd;
+  height: 70px;
+}
+.scroll-column div {
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  justify-content: center;
+  width: 100%;
+}
 .scroll-column div button {
   display: none;
 }
-
 .mat-mdc-row .mat-mdc-cell {
   border-bottom: 1px solid transparent;
   border-top: 1px solid transparent;
   background-color: unset;
 }
-
 .mat-mdc-row:nth-child(odd) {
   background-color: rgba(36, 36, 36, 0.036);
 }

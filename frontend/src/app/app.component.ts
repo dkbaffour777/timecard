@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './components/pages/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
-import { TimesheetComponent } from './components/timesheet/timesheet.component';
+import { TimecardComponent } from './components/timecard/timecard.component';
 import { WorkstationComponent } from './components/pages/workstation/workstation.component';
 
 @Component({
@@ -13,7 +13,7 @@ import { WorkstationComponent } from './components/pages/workstation/workstation
     HeaderComponent,
     HomeComponent,
     WorkstationComponent,
-    TimesheetComponent
+    TimecardComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
