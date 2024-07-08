@@ -105,6 +105,8 @@ export class BottomSheetComponent {
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   templateUrl: './workstation.component.html',
   styleUrl: './workstation.component.css',

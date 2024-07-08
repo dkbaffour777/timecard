@@ -1,4 +1,14 @@
 <div id="workstations-container">
+  <div style="display: flex; justify-content: center">
+    <mat-form-field appearance="fill">
+      <mat-label style="font-size: small">Add Group</mat-label>
+      <input matInput placeholder="Group Name" />
+      <mat-icon matSuffix>group_add</mat-icon>
+    </mat-form-field>
+    <button mat-raised-button style="margin-left: 20px; margin-top: 10px">
+      Add
+    </button>
+  </div>
   <h4 style="font-weight: 100; text-align: center">Workstation Groups</h4>
   <div id="wk-table-container">
     <table mat-table [dataSource]="dataSource">
