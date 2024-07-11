@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/workstations")
+@CrossOrigin(origins = "http://localhost:4200")
 public class WorkstationController {
 
     @Autowired
@@ -17,7 +18,7 @@ public class WorkstationController {
 
     // Add a workstation
     @PostMapping("/workstation/add")
-    public Workstation createWorkstation(Workstation workstation) {
+    public Workstation createWorkstation(@RequestBody Workstation workstation) {
         return workstationService.saveWorkstation(workstation);
     }
 
