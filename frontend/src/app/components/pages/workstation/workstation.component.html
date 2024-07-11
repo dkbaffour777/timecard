@@ -1,27 +1,27 @@
 <div id="workstations-container">
   <div style="display: flex; justify-content: center">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" (submit)="addWorkstation()">
       <mat-label style="font-size: small">Add Group</mat-label>
-      <input matInput placeholder="Group Name" />
+      <input matInput placeholder="Group Name" [(ngModel)]="newWorkstationName"/>
       <mat-icon matSuffix>group_add</mat-icon>
     </mat-form-field>
-    <button mat-raised-button style="margin-left: 20px; margin-top: 10px">
+    <button mat-raised-button style="margin-left: 20px; margin-top: 10px" (click)="addWorkstation()">
       Add
     </button>
   </div>
-  <h4 style="font-weight: 100; text-align: center">Workstation Groups</h4>
+  <h4 style="font-weight: 100; text-align: center">Workstations</h4>
   <div id="wk-table-container">
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Group Name</th>
-        <td mat-cell *matCellDef="let group">
-          {{ group.name }}
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let workstation">
+          {{ workstation.name }}
         </td>
       </ng-container>
       <ng-container matColumnDef="members">
-        <th mat-header-cell *matHeaderCellDef>Group Members</th>
-        <td mat-cell *matCellDef="let group">
-          <span>{{ group.members.length }}</span>
+        <th mat-header-cell *matHeaderCellDef>Members</th>
+        <td mat-cell *matCellDef="let workstation">
+          <span>{{ workstation.members.length }}</span>
           <button
             mat-raised-button
             style="margin-left: 20px"

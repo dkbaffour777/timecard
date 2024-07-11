@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
   MatBottomSheet,
   MatBottomSheetRef,
@@ -12,59 +12,12 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
-class Group {
-  name: string;
-  members: Member[];
-  constructor(name: string) {
-    this.name = name;
-    this.members = [];
-  }
-}
-
-export class Member {
-  name: string;
-  timeIn: number;
-  break1out: number;
-  break1in: number;
-  lunchOut: number;
-  lunchIn: number;
-  break2out: number;
-  break2in: number;
-  timeOut: number;
-
-  [key: string]: any; // index checking
-
-  constructor(name: string) {
-    this.name = name;
-    this.timeIn = 0;
-    this.break1out = 0;
-    this.break1in = 0;
-    this.lunchOut = 0;
-    this.lunchIn = 0;
-    this.break2out = 0;
-    this.break2in = 0;
-    this.timeOut = 0;
-  }
-}
-
-const fullnames = [
-  'John Smith',
-  'Sarah Johnson',
-  'Alex Williams',
-  'Emily Brown',
-  'Michael Davis',
-  'Jessica Miller',
-  'Daniel Wilson',
-  'Laura Moore',
-  'David Taylor',
-  'Sophia Anderson',
-  'James Thomas',
-  'Olivia Jackson',
-  'Robert Harris',
-  'Emma Clark',
-  'William Lewis',
-];
+import {
+  WorkstationService,
+  Workstation,
+} from '../../../services/workstation.service';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 /**
  * Bottom Sheet Component
@@ -72,12 +25,20 @@ const fullnames = [
 @Component({
   selector: 'bottom-sheet',
   templateUrl: './bottom-sheet.component.html',
-  styleUrl: './bottom-sheet.component.css',
+  styleUrls: ['./bottom-sheet.component.css'],
   standalone: true,
-  imports: [MatListModule, MatIconModule, MatButtonModule, MatTooltipModule, CommonModule, MatFormFieldModule, MatInputModule],
+  imports: [
+    MatListModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
 })
 export class BottomSheetComponent {
-  members: Member[] = fullnames.map((fullname) => new Member(fullname));
+  members: string[] = [];
 
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>
@@ -88,8 +49,8 @@ export class BottomSheetComponent {
     event.preventDefault();
   }
 
-  trackByName(index: number, member: Member): string {
-    return member.name;
+  trackByName(index: number, employee: string): string {
+    return employee;
   }
 }
 
@@ -99,36 +60,55 @@ export class BottomSheetComponent {
 @Component({
   selector: 'app-workstation',
   standalone: true,
+  providers: [WorkstationService],
   imports: [
+    HttpClientModule,
     MatTableModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    FormsModule,
   ],
   templateUrl: './workstation.component.html',
-  styleUrl: './workstation.component.css',
+  styleUrls: ['./workstation.component.css'],
 })
 export class WorkstationComponent implements AfterViewInit {
-  dataSource: MatTableDataSource<Group>;
+  dataSource: MatTableDataSource<Workstation> = new MatTableDataSource();
   displayedColumns: string[] = ['name', 'members'];
+  newWorkstationName: string = '';
 
-  constructor(private _bottomSheet: MatBottomSheet) {
-    const groups = [
-      'Visual Inspection',
-      'CalCheck',
-      'Membrane',
-      'Applicators',
-      'Quality Assurance',
-      'Manufacturing Clerks',
-    ].map((name) => new Group(name));
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(groups);
+  constructor(
+    private _bottomSheet: MatBottomSheet,
+    private workstationService: WorkstationService
+  ) {}
+
+  addWorkstation(): void {
+    if (this.newWorkstationName) {
+      this.workstationService
+        .addWorkstation(this.newWorkstationName)
+        .subscribe((workstation: Workstation) => {
+          console.log('Added Workstation', workstation);
+          this.dataSource.data = [...this.dataSource.data, workstation];
+          this.newWorkstationName = '';
+        });
+    }
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit(): void {
+    this.getWorkStations();
+  }
+
+  getWorkStations() {
+    this.workstationService
+      .getWorkstations()
+      .subscribe((workstations: Workstation[]) => {
+        this.dataSource = new MatTableDataSource(workstations);
+        console.log('Workstations', workstations);
+      });
+  }
 
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetComponent);
