@@ -22,6 +22,18 @@ public class WorkstationController {
         return workstationService.saveWorkstation(workstation);
     }
 
+    // Add a workstation member
+    @PutMapping("/workstation/{id}/member/add")
+    public Workstation addWorkstationMember(@PathVariable Long id, @RequestBody String member) {
+        return workstationService.addWorkstationMembers(id, member);
+    }
+
+    // Remove a workstation member
+    @PutMapping("/workstation/{id}/member/remove")
+    public Workstation removeWorkstationMember(@PathVariable Long id, @RequestBody String member) {
+        return workstationService.removeWorkstationMembers(id, member);
+    }
+
     // Get all workstations
     @GetMapping
     public List<Workstation> getAllWorkstation() {

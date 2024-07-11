@@ -32,4 +32,24 @@ public class WorkstationService {
     public void removeWorkstationById(Long id) {
         workstationRepository.deleteById(id);
     }
+
+    // Add workstation members
+    public Workstation addWorkstationMembers(Long id, String member) {
+        Workstation workstation = workstationRepository.findById(id).orElse(null);
+        if(workstation != null) {
+            workstation.getMembers().add(member);
+            workstationRepository.save(workstation);
+        }
+        return workstation;
+    }
+
+    // Remove workstation members
+    public Workstation removeWorkstationMembers(Long id, String member) {
+        Workstation workstation = workstationRepository.findById(id).orElse(null);
+        if(workstation != null) {
+            workstation.getMembers().remove(member);
+            workstationRepository.save(workstation);
+        }
+        return workstation;
+    }
 }
