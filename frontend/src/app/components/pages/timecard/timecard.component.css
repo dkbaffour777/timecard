@@ -28,7 +28,7 @@ button {
   width: 100%;
   height: 400px;
   display: flex;
-  overflow: hidden;
+  overflow: auto;
 }
 .scroll-column-head {
   border-right: 1px solid #ddd;
