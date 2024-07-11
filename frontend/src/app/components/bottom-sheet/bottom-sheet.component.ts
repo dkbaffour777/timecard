@@ -45,9 +45,10 @@ export class BottomSheetComponent implements OnInit {
   ) {
   }
 
-  addWorkstationMembers() {
+  addWorkstationMember() {
     if(this.newWorkstationMember) {
-      this.workstationService.addWorkstationMembers(this.newWorkstationMember);
+      this.members = this.workstationService.addWorkstationMember(this.newWorkstationMember);
+      this.newWorkstationMember;
     }
   }
 

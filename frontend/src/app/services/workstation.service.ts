@@ -8,10 +8,8 @@ import { WorkstationSharedDataService } from './workstation-shared-data.service'
 })
 export class WorkstationService {
   http = inject(HttpClient);
-  
-  constructor(private sharedDataWorkstation: WorkstationSharedDataService) {
 
-  }
+  constructor(private sharedDataWorkstation: WorkstationSharedDataService) {}
 
   private apiUrl = 'http://localhost:8080/api/workstations';
 
@@ -31,17 +29,21 @@ export class WorkstationService {
     );
   }
 
-  addWorkstationMembers(member: string): void {
-    this.sharedDataWorkstation.currentSelectedWorkstation.subscribe((workstation) => {
-      if(workstation) {
-        this.http
+  addWorkstationMember(member: string):  string[] {
+    const selectedMembers: string[]  = [];
+    this.sharedDataWorkstation.currentSelectedWorkstation.subscribe(
+      (workstation) => {
+        if (workstation) {
+          this.http
           .put<Workstation>(`${this.apiUrl}/workstation/${workstation.id}/member/add`, member)
           .subscribe((workstation: Workstation) => {
-            this.sharedDataWorkstation.setselectedWorkstation(workstation);
+            workstation.members.map(member => selectedMembers.push(member));
             console.log('Added workstation member', workstation);
           });
+        }
       }
-    })
+    ).unsubscribe();
+    return selectedMembers;
   }
 }
 

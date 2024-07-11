@@ -1,14 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
 import {
   MatBottomSheet,
-  MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -80,7 +77,7 @@ export class WorkstationComponent implements AfterViewInit {
   }
 
   openBottomSheet(workstation: Workstation): void {
-    this.sharedDataWorkstation.setselectedWorkstation(workstation);
+    this.sharedDataWorkstation.setSelectedWorkstation(workstation);
     this._bottomSheet.open(BottomSheetComponent);
   }
 }

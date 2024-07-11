@@ -11,7 +11,8 @@ export class WorkstationSharedDataService {
 
   constructor() {}
 
-  setselectedWorkstation(workstation: Workstation) {
-    this.selectedWorkstation.next(workstation)
+  setSelectedWorkstation(workstation: Workstation) {
+    console.log("Selected workstation", workstation)
+    this.selectedWorkstation.next(workstation);
   }
 }
