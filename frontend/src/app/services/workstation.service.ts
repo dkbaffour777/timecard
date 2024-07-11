@@ -29,20 +29,24 @@ export class WorkstationService {
     );
   }
 
-  addWorkstationMember(member: string):  string[] {
-    const selectedMembers: string[]  = [];
-    this.sharedDataWorkstation.currentSelectedWorkstation.subscribe(
-      (workstation) => {
+  addWorkstationMember(member: string): string[] {
+    const selectedMembers: string[] = [];
+    this.sharedDataWorkstation.currentSelectedWorkstation
+      .subscribe((workstation) => {
         if (workstation) {
           this.http
-          .put<Workstation>(`${this.apiUrl}/workstation/${workstation.id}/member/add`, member)
-          .subscribe((workstation: Workstation) => {
-            workstation.members.map(member => selectedMembers.push(member));
-            console.log('Added workstation member', workstation);
-          });
+            .put<Workstation>(
+              `${this.apiUrl}/workstation/${workstation.id}/member/add`,
+              member
+            )
+            .subscribe((workstation: Workstation) => {
+              // Update the selected workstation's members
+              workstation.members.map((member) => selectedMembers.push(member));
+              console.log('Added workstation member', workstation);
+            });
         }
-      }
-    ).unsubscribe();
+      })
+      .unsubscribe();
     return selectedMembers;
   }
 }

@@ -72,12 +72,17 @@ export class WorkstationComponent implements AfterViewInit {
       .getWorkstations()
       .subscribe((workstations: Workstation[]) => {
         this.dataSource = new MatTableDataSource(workstations);
+        this.sharedDataWorkstation.setWorkstations(workstations);
         console.log('Workstations', workstations);
       });
   }
 
   openBottomSheet(workstation: Workstation): void {
     this.sharedDataWorkstation.setSelectedWorkstation(workstation);
-    this._bottomSheet.open(BottomSheetComponent);
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent);
+
+    bottomSheetRef.afterDismissed().subscribe(() => {
+      this.getWorkStations();  // Refresh the data when the bottom sheet is dismissed
+    });
   }
 }

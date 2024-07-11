@@ -48,7 +48,7 @@ export class BottomSheetComponent implements OnInit {
   addWorkstationMember() {
     if(this.newWorkstationMember) {
       this.members = this.workstationService.addWorkstationMember(this.newWorkstationMember);
-      this.newWorkstationMember;
+      this.newWorkstationMember = "";
     }
   }
 
@@ -64,6 +64,10 @@ export class BottomSheetComponent implements OnInit {
   openLink(event: MouseEvent): void {
     this._bottomSheetRef.dismiss();
     event.preventDefault();
+  }
+
+  closeBottomSheet(event: MouseEvent): void {
+    console.log(event.target)
   }
 
   trackByName(index: number, employee: string): string {
