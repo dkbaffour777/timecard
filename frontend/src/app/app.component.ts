@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './components/pages/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
-import { TimecardComponent } from './components/timecard/timecard.component';
+import { TimecardComponent } from './components/pages/timecard/timecard.component';
 import { WorkstationComponent } from './components/pages/workstation/workstation.component';
 
 @Component({

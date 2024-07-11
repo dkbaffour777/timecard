@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import {
   MatBottomSheet,
   MatBottomSheetRef,
@@ -18,41 +18,9 @@ import {
 } from '../../../services/workstation.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { BottomSheetComponent } from '../../bottom-sheet/bottom-sheet.component';
+import { WorkstationSharedDataService } from '../../../services/workstation-shared-data.service';
 
-/**
- * Bottom Sheet Component
- */
-@Component({
-  selector: 'bottom-sheet',
-  templateUrl: './bottom-sheet.component.html',
-  styleUrls: ['./bottom-sheet.component.css'],
-  standalone: true,
-  imports: [
-    MatListModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTooltipModule,
-    CommonModule,
-    MatFormFieldModule,
-    MatInputModule,
-  ],
-})
-export class BottomSheetComponent {
-  members: string[] = [];
-
-  constructor(
-    private _bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>
-  ) {}
-
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
-
-  trackByName(index: number, employee: string): string {
-    return employee;
-  }
-}
 
 /**
  * Workstation Component
@@ -82,7 +50,8 @@ export class WorkstationComponent implements AfterViewInit {
 
   constructor(
     private _bottomSheet: MatBottomSheet,
-    private workstationService: WorkstationService
+    private workstationService: WorkstationService,
+    private sharedDataWorkstation: WorkstationSharedDataService
   ) {}
 
   addWorkstation(): void {
@@ -110,7 +79,8 @@ export class WorkstationComponent implements AfterViewInit {
       });
   }
 
-  openBottomSheet(): void {
+  openBottomSheet(workstation: Workstation): void {
+    this.sharedDataWorkstation.setselectedWorkstation(workstation);
     this._bottomSheet.open(BottomSheetComponent);
   }
 }
