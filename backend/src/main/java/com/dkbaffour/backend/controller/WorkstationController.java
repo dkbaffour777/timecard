@@ -33,4 +33,10 @@ public class WorkstationController {
     public Workstation getWorkstationById(@PathVariable Long id) {
         return workstationService.getWorkstationById(id);
     }
+
+    // Delete workStation by id
+    @DeleteMapping("/workstation/delete/{id}")
+    public void deleteWorkstation(@PathVariable Long id) {
+        workstationService.removeWorkstationById(id);
+    }
 }

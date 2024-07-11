@@ -27,4 +27,9 @@ public class WorkstationService {
     public Workstation getWorkstationById(Long id) {
         return workstationRepository.findById(id).orElse(null);
     }
+
+    // Delete a workstation
+    public void removeWorkstationById(Long id) {
+        workstationRepository.deleteById(id);
+    }
 }
