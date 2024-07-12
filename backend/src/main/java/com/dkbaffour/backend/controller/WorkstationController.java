@@ -1,7 +1,7 @@
 package com.dkbaffour.backend.controller;
 
-
 import com.dkbaffour.backend.model.Workstation;
+import com.dkbaffour.backend.model.BreakLog;
 import com.dkbaffour.backend.service.WorkstationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +18,8 @@ public class WorkstationController {
 
     // Add a workstation
     @PostMapping("/workstation/add")
-    public Workstation createWorkstation(@RequestBody Workstation workstation) {
-        return workstationService.saveWorkstation(workstation);
+    public Workstation createWorkstation(@RequestBody String name) {
+        return workstationService.saveWorkstation(name);
     }
 
     // Add a workstation member
@@ -50,5 +50,11 @@ public class WorkstationController {
     @DeleteMapping("/workstation/delete/{id}")
     public void deleteWorkstation(@PathVariable Long id) {
         workstationService.removeWorkstationById(id);
+    }
+
+    // Get BreakLogs for a specific Workstation
+    @GetMapping("/workstation/{id}/breaklogs")
+    public List<BreakLog> getBreakLogsByWorkstationId(@PathVariable Long id) {
+        return workstationService.getBreakLogsByWorkstationId(id);
     }
 }
