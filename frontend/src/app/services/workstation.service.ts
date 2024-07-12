@@ -18,10 +18,7 @@ export class WorkstationService {
   }
 
   addWorkstation(name: string): Observable<Workstation> {
-    return this.http.post<Workstation>(
-      `${this.apiUrl}/workstation/add`,
-      name
-    );
+    return this.http.post<Workstation>(`${this.apiUrl}/workstation/add`, name);
   }
 
   addWorkstationMember(member: string): string[] {
@@ -43,6 +40,12 @@ export class WorkstationService {
       })
       .unsubscribe();
     return selectedMembers;
+  }
+
+  getBreakLogsByWorkstation(id: number, creationDate: string): Observable<BreakLog[]> {
+    return this.http.get<BreakLog[]>(
+      `${this.apiUrl}/workstation/${id}/breaklogs?creationDate=${creationDate}`
+    );
   }
 }
 
