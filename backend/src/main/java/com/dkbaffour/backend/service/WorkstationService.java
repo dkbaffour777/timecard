@@ -7,10 +7,9 @@ import com.dkbaffour.backend.repository.WorkstationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -85,9 +84,8 @@ public class WorkstationService {
         return workstation;
     }
 
-    // Get BreakLogs for a specific Workstation
-    public List<BreakLog> getBreakLogsByWorkstationId(Long workstationId) {
-        Optional<Workstation> workstation = workstationRepository.findById(workstationId);
-        return workstation.map(ws -> new ArrayList<>(ws.getBreakLogs())).orElse(null);
+    // Get BreakLogs of a Workstation on a specified date
+    public List<BreakLog> getBreakLogsByWorkstationAndDate(Long workstationId, LocalDate creationDate) {
+        return breakLogRepository.findByWorkstationIdAndCreationDate(workstationId, creationDate);
     }
 }

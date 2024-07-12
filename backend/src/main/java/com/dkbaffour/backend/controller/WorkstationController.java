@@ -6,6 +6,7 @@ import com.dkbaffour.backend.service.WorkstationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -54,7 +55,8 @@ public class WorkstationController {
 
     // Get BreakLogs for a specific Workstation
     @GetMapping("/workstation/{id}/breaklogs")
-    public List<BreakLog> getBreakLogsByWorkstationId(@PathVariable Long id) {
-        return workstationService.getBreakLogsByWorkstationId(id);
+    public List<BreakLog> getBreakLogsByWorkstationAndDate(@PathVariable Long id, @RequestParam String creationDate) {
+        LocalDate parsedDate = LocalDate.parse(creationDate);
+        return workstationService.getBreakLogsByWorkstationAndDate(id, parsedDate);
     }
 }
