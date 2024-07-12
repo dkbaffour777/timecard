@@ -18,14 +18,9 @@ export class WorkstationService {
   }
 
   addWorkstation(name: string): Observable<Workstation> {
-    const newWorkstation: Omit<Workstation, 'id'> = {
-      name: name,
-      members: [],
-    };
-
     return this.http.post<Workstation>(
       `${this.apiUrl}/workstation/add`,
-      newWorkstation
+      name
     );
   }
 
@@ -55,4 +50,14 @@ export interface Workstation {
   id: number;
   name: string;
   members: string[];
+  breakLogs: BreakLog[];
+}
+
+export interface BreakLog {
+  id: number;
+  employeeName: string;
+  breakType: string;
+  punchOut: number;
+  punchIn: number;
+  timeSpent: string;
 }
