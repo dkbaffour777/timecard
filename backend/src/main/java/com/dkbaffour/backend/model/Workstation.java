@@ -1,19 +1,17 @@
 package com.dkbaffour.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Data // Lombok annotation to generate getters and setters
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
 public class Workstation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
