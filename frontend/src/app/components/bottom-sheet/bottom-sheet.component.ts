@@ -9,7 +9,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { WorkstationService } from "../../services/workstation.service";
+import { Workstation, WorkstationService } from "../../services/workstation.service";
 import { WorkstationSharedDataService } from "../../services/workstation-shared-data.service";
 
 /**
@@ -37,6 +37,7 @@ export class BottomSheetComponent implements OnInit {
   members: string[] = [];
   newWorkstationMember: string = "";
   selectedWorkstationName: string = "";
+  workstation_id: number | null = null;
 
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>,
@@ -52,9 +53,18 @@ export class BottomSheetComponent implements OnInit {
     }
   }
 
+  removeWorkstationMember(member: string) {
+    if(this.workstation_id) {
+      this.workstationService.removeWorkstationMember(this.workstation_id, member).subscribe((workstation: Workstation) => {
+        this.members = workstation.members;
+      });
+    }
+  }
+
   ngOnInit(): void {
     this.sharedDataWorkstation.currentSelectedWorkstation.subscribe((workstation) => {
       if(workstation) {
+        this.workstation_id = workstation.id;
         this.selectedWorkstationName = workstation.name;
         this.members = [...workstation.members];
       }

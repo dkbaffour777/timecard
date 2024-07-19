@@ -47,6 +47,12 @@ export class WorkstationService {
       `${this.apiUrl}/workstation/${id}/breaklogs?creationDate=${creationDate}`
     );
   }
+
+  removeWorkstationMember(workstation_id: number, member: string): Observable<Workstation> {
+    return this.http.put<Workstation>(
+      `${this.apiUrl}/workstation/${workstation_id}/member/remove`, member
+    );
+  }
 }
 
 export interface Workstation {
