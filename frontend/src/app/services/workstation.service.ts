@@ -53,6 +53,10 @@ export class WorkstationService {
       `${this.apiUrl}/workstation/${workstation_id}/member/remove`, member
     );
   }
+
+  deleteWorkstation(workstation_id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/workstation/delete/${workstation_id}`);
+  }
 }
 
 export interface Workstation {
