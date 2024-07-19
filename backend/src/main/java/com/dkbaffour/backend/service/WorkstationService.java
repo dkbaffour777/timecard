@@ -78,6 +78,8 @@ public class WorkstationService {
     public Workstation removeWorkstationMembers(Long id, String member) {
         Workstation workstation = workstationRepository.findById(id).orElse(null);
         if (workstation != null) {
+            breakLogRepository.removeMemberBreakLogs(id, member);
+
             workstation.getMembers().remove(member);
             workstationRepository.save(workstation);
         }
