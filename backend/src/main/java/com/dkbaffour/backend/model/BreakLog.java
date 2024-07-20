@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data // Lombok annotation to generate getters and setters
 @Table(
     uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"employeeName", "breakType", "workstation_id"})
+        @UniqueConstraint(columnNames = {"creationDate", "employeeName", "breakType", "workstation_id"})
     }
 )
 public class BreakLog {

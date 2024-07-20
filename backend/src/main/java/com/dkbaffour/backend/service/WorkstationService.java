@@ -47,28 +47,11 @@ public class WorkstationService {
     public Workstation addWorkstationMembers(Long id, String member) {
         Workstation workstation = workstationRepository.findById(id).orElse(null);
         if (workstation != null) {
-            if (workstation.getMembers() == null) {
+            if(workstation.getMembers() == null) {
                 workstation.setMembers(new HashSet<>());
             }
-
-            if (workstation.getMembers().add(member)) {
-                // Bulk create break logs
-                Set<BreakLog> breakLogs = new HashSet<>();
-                String[] breakTypes = {"Break 1", "Lunch", "Break 2"};
-
-                for (String breakType : breakTypes) {
-                    BreakLog breakLog = new BreakLog();
-                    breakLog.setEmployeeName(member);
-                    breakLog.setBreakType(breakType);
-                    breakLog.setWorkstation(workstation);
-
-                    breakLogs.add(breakLog);
-                }
-                workstation.getBreakLogs().addAll(breakLogs);
-
-                breakLogRepository.saveAll(breakLogs);
-                workstationRepository.save(workstation);
-            }
+            workstation.getMembers().add(member);
+            workstationRepository.save(workstation);
         }
 
         return workstation;
@@ -83,6 +66,40 @@ public class WorkstationService {
             workstation.getMembers().remove(member);
             workstationRepository.save(workstation);
         }
+        return workstation;
+    }
+
+    // Add new break log sheet
+    public Workstation addBreakLogSheet(Long id) {
+        Workstation workstation = workstationRepository.findById(id).orElse(null);
+        if (workstation != null) {
+
+            if (workstation.getMembers().size() > 0) {
+                Set<String> members = workstation.getMembers();
+
+                for(String member: members) {
+                    // Bulk create break logs
+                    Set<BreakLog> breakLogs = new HashSet<>();
+                    String[] breakTypes = {"Break 1", "Lunch", "Break 2"};
+
+                    for (String breakType : breakTypes) {
+                        BreakLog breakLog = new BreakLog();
+                        breakLog.setEmployeeName(member);
+                        breakLog.setBreakType(breakType);
+                        breakLog.setWorkstation(workstation);
+
+                        breakLogs.add(breakLog);
+                    }
+                    workstation.getBreakLogs().addAll(breakLogs);
+
+                    breakLogRepository.saveAll(breakLogs);
+                }
+
+                workstationRepository.save(workstation);
+            }
+        }
+
+
         return workstation;
     }
 

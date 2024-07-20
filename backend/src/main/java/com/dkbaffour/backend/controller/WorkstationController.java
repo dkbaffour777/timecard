@@ -53,6 +53,12 @@ public class WorkstationController {
         workstationService.removeWorkstationById(id);
     }
 
+    // Add break log sheet
+    @PostMapping("/workstation/{id}/breaklogsheet/add")
+    public Workstation addBreakLogSheet(@PathVariable Long id) {
+        return workstationService.addBreakLogSheet(id);
+    }
+
     // Get BreakLogs for a specific Workstation
     @GetMapping("/workstation/{id}/breaklogs")
     public List<BreakLog> getBreakLogsByWorkstationAndDate(@PathVariable Long id, @RequestParam String creationDate) {
