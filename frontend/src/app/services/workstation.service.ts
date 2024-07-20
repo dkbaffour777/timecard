@@ -42,6 +42,10 @@ export class WorkstationService {
     return selectedMembers;
   }
 
+  addBreakLogSheet(workstation_id: number): Observable<Workstation> {
+    return this.http.post<Workstation>(`${this.apiUrl}/workstation/${workstation_id}/breaklogsheet/add`, null);
+  }
+
   getBreakLogsByWorkstation(id: number, creationDate: string): Observable<BreakLog[]> {
     return this.http.get<BreakLog[]>(
       `${this.apiUrl}/workstation/${id}/breaklogs?creationDate=${creationDate}`

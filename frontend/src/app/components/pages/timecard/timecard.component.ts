@@ -55,7 +55,8 @@ export class TimecardComponent {
   breakLogs: MatTableDataSource<BreakLog> = new MatTableDataSource<BreakLog>();
   workstations: Workstation[] = [];
   currentDateDisplay: string = '---';
-  selectedWorkstationId: number | null = null;
+  selectedWorkstationId_filterTable: number | null = null;
+  selectedWorkstationId_createBreakLog: number | null = null;
   selectedCreationDate: string | null = null;
 
   @ViewChild(MatPaginator)
@@ -79,8 +80,17 @@ export class TimecardComponent {
     }
   }
 
+  addBreakLogSheet() {
+    const id = this.selectedWorkstationId_createBreakLog;
+    if(id) {
+      this.workstationService.addBreakLogSheet(id).subscribe((workstation) => {
+        alert(`A new break log sheet was added!`);
+      })
+    }
+  }
+
   updateBreakLogs() {
-    const id = this.selectedWorkstationId;
+    const id = this.selectedWorkstationId_filterTable;
 
     if (id && this.selectedCreationDate) {
       const formattedCreationDate = this.formatCreationDate(

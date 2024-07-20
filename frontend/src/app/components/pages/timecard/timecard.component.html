@@ -26,7 +26,7 @@
 
       <mat-form-field>
         <mat-label class="mat-label">Workstation</mat-label>
-        <mat-select [(value)]="selectedWorkstationId">
+        <mat-select [(value)]="selectedWorkstationId_filterTable">
           <mat-option>None</mat-option>
           @for (workstation of workstations; track workstation) {
           <mat-option [value]="workstation.id">{{
@@ -128,10 +128,33 @@
     </table>
   </div>
 
-  <mat-paginator
-    [pageSizeOptions]="[5]"
-    aria-label="Select page of users"
-    style="width: 100%; background-color: #ffff"
-  ></mat-paginator>
+  <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+    <div style="display: flex; gap: 20px;">
+      <div>
+        <mat-form-field>
+          <mat-label class="mat-label">Workstation</mat-label>
+          <mat-select [(value)]="selectedWorkstationId_createBreakLog">
+            <mat-option>None</mat-option>
+            @for (workstation of workstations; track workstation) {
+            <mat-option [value]="workstation.id">{{
+              workstation.name
+            }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <div style="font-size: 12px; width: 210px;">Add today's break log sheet.</div>
+      </div>
+  
+      <div style="margin-top: 10px">
+        <button mat-button (click)="addBreakLogSheet()">Submit</button>
+      </div>
+    </div>
+
+    <mat-paginator
+      [pageSizeOptions]="[5]"
+      aria-label="Select page of users"
+      style="width: 100%; background-color: #ffff"
+    ></mat-paginator>
+  </div>
   <!-- Break Logs table container end-->
 </div>
