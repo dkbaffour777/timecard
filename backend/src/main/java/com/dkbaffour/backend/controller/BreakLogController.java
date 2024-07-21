@@ -18,7 +18,7 @@ public class BreakLogController {
 
     // Add a workstation member
     @PutMapping("/breaklog/update")
-    public BreakLog addWorkstationMember(@RequestBody BreakLog breakLog) {
+    public BreakLog updateBreakLog(@RequestBody BreakLog breakLog) {
         Long id = breakLog.getId();
         LocalDateTime punchOut = breakLog.getPunchOut();
         LocalDateTime punchIn = breakLog.getPunchIn();
