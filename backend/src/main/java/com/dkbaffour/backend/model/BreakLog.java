@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data // Lombok annotation to generate getters and setters
@@ -26,9 +27,9 @@ public class BreakLog {
     @Column(nullable = false)
     private String breakType;
 
-    private Number punchOut;
+    private LocalDateTime punchOut;
 
-    private Number punchIn;
+    private LocalDateTime punchIn;
 
     private String timeSpent;
 
