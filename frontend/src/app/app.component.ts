@@ -4,6 +4,8 @@ import { HomeComponent } from './components/pages/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TimecardComponent } from './components/pages/timecard/timecard.component';
 import { WorkstationComponent } from './components/pages/workstation/workstation.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,15 @@ import { WorkstationComponent } from './components/pages/workstation/workstation
     HeaderComponent,
     HomeComponent,
     WorkstationComponent,
-    TimecardComponent
+    TimecardComponent,
+    HttpClientModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

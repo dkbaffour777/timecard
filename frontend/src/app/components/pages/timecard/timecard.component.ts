@@ -1,11 +1,6 @@
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
@@ -20,11 +15,15 @@ import {
   Workstation,
   WorkstationService,
 } from '../../../services/workstation.service';
+import { BreakLogService } from '../../../services/break-log.service';
+import { LoaderComponent } from '../../loader/loader.component';
+import { LoaderService } from '../../../services/loader.service';
 
 @Component({
   selector: 'app-timecard',
   standalone: true,
   imports: [
+    LoaderComponent,
     MatButtonModule,
     MatInputModule,
     MatTableModule,
@@ -38,7 +37,7 @@ import {
   ],
   templateUrl: './timecard.component.html',
   styleUrl: './timecard.component.css',
-  providers: [provideNativeDateAdapter(), WorkstationService],
+  providers: [provideNativeDateAdapter(), WorkstationService, BreakLogService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimecardComponent {
@@ -64,29 +63,51 @@ export class TimecardComponent {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  constructor(private workstationService: WorkstationService) {
+  constructor(
+    private workstationService: WorkstationService,
+    private breakLogService: BreakLogService,
+    private loaderService: LoaderService
+  ) {
     this.workstationService.getWorkstations().subscribe((workstations) => {
       this.workstations = workstations;
-      console.log(workstations);
     });
-  }
-
-  punch(breakLog: BreakLog, key: string): void {
-    const timestamp = Date.now();
-    const id = breakLog.id;
-    const row = this.breakLogs.data.find((breakLog) => breakLog.id === id);
-    if (row) {
-      //row[key] = timestamp;
-    }
   }
 
   addBreakLogSheet() {
     const id = this.selectedWorkstationId_createBreakLog;
-    if(id) {
-      this.workstationService.addBreakLogSheet(id).subscribe((workstation) => {
-        alert(`A new break log sheet was added!`);
-      })
+    if (id) {
+      this.workstationService.addBreakLogSheet(id).subscribe({
+        complete: () => {
+          this.loaderService.hide();
+          alert(`A new break log sheet was added!`);
+        },
+        error: (error) => {
+          console.error('Error adding break log sheet:', error);
+          this.loaderService.hide();
+        },
+      });
     }
+  }
+
+  punch(breakLog: BreakLog, key: 'punchIn' | 'punchOut') {
+    const _breakLog = { ...breakLog };
+    _breakLog[key] = this.getCurrentPunchTimestamp();
+    this.loaderService.show();
+    this.breakLogService.updateBreakLog(_breakLog).subscribe({
+      next: (updatedBreakLog) => {
+        breakLog.punchIn = updatedBreakLog.punchIn;
+        breakLog.punchOut = updatedBreakLog.punchOut;
+        breakLog.timeSpent = updatedBreakLog.timeSpent;
+        console.log('Done updating');
+      },
+      complete: () => {
+        this.loaderService.hide();
+      },
+      error: (error) => {
+        console.error('Error updating break log:', error);
+        this.loaderService.hide();
+      },
+    });
   }
 
   updateBreakLogs() {
@@ -103,11 +124,24 @@ export class TimecardComponent {
 
       this.workstationService
         .getBreakLogsByWorkstation(id, formattedCreationDate)
-        .subscribe((breakLogs) => {
-          this.breakLogs = new MatTableDataSource<BreakLog>(breakLogs);
-
-          this.breakLogs.paginator = this.paginator;
-          this.breakLogs.sort = this.sort;
+        .subscribe({
+          next: (breakLogs) => {
+            const updatedbreakLogs = breakLogs.map((breakLog) => ({
+              ...breakLog,
+              isLoading: false,
+            }));
+            this.breakLogs = new MatTableDataSource<BreakLog>(updatedbreakLogs);
+  
+            this.breakLogs.paginator = this.paginator;
+            this.breakLogs.sort = this.sort;
+          },
+          complete: () => {
+            this.loaderService.hide();
+          },
+          error: (error) => {
+            console.error('Error getting break logs:', error);
+            this.loaderService.hide();
+          },
         });
     }
   }
@@ -142,29 +176,20 @@ export class TimecardComponent {
     return `${year}-${month}-${day}`;
   }
 
-  getDateDifference(date1: any, date2: any) {
-    const diffInMs = date1 - date2;
+  getCurrentPunchTimestamp(): string {
+    function padToTwoDigits(num: number) {
+      return num.toString().padStart(2, '0');
+    }
 
-    const diffInSeconds = Math.floor(diffInMs / 1000);
-    const diffInMinutes = Math.floor(diffInSeconds / 60);
-    const diffInHours = Math.floor(diffInMinutes / 60);
-    const diffInDays = Math.floor(diffInHours / 24);
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = padToTwoDigits(date.getMonth() + 1); // getMonth() is zero-based
+    const day = padToTwoDigits(date.getDate());
+    const hours = padToTwoDigits(date.getHours());
+    const minutes = padToTwoDigits(date.getMinutes());
+    const seconds = padToTwoDigits(date.getSeconds());
 
-    return {
-      milliseconds: diffInMs,
-      seconds: diffInSeconds % 60,
-      minutes: diffInMinutes % 60,
-      hours: diffInHours % 24,
-      days: diffInDays,
-    };
-  }
-
-  getTimeSpent(punchOut: number, punchIn: number): string {
-    if (!punchOut || !punchIn) return '0';
-    const date1 = new Date(punchIn);
-    const date2 = new Date(punchOut);
-    const difference = this.getDateDifference(date1, date2);
-    return `${difference.hours} hr, ${difference.minutes} min, ${difference.seconds} sec`;
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
   }
 
   displayButton(e: any) {

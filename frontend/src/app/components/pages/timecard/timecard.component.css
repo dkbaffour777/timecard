@@ -30,6 +30,9 @@ button {
   display: flex;
   overflow: auto;
 }
+.table-container table {
+  min-width: 1200px;
+}
 .scroll-column-head {
   border-right: 1px solid #ddd;
   min-width: 220px;

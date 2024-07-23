@@ -1,6 +1,6 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { WorkstationSharedDataService } from './workstation-shared-data.service';
 
 @Injectable({
@@ -74,7 +74,7 @@ export interface BreakLog {
   id: number;
   employeeName: string;
   breakType: string;
-  punchOut: number;
-  punchIn: number;
+  punchOut: string;
+  punchIn: string;
   timeSpent: string;
 }
