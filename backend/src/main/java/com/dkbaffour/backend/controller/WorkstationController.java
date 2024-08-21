@@ -4,6 +4,7 @@ import com.dkbaffour.backend.model.Workstation;
 import com.dkbaffour.backend.model.BreakLog;
 import com.dkbaffour.backend.service.WorkstationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -17,50 +18,50 @@ public class WorkstationController {
     @Autowired
     WorkstationService workstationService;
 
-    // Add a workstation
     @PostMapping("/workstation/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public Workstation createWorkstation(@RequestBody String name) {
         return workstationService.saveWorkstation(name);
     }
 
-    // Add a workstation member
     @PutMapping("/workstation/{id}/member/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public Workstation addWorkstationMember(@PathVariable Long id, @RequestBody String member) {
         return workstationService.addWorkstationMembers(id, member);
     }
 
-    // Remove a workstation member
     @PutMapping("/workstation/{id}/member/remove")
+    @PreAuthorize("hasRole('ADMIN')")
     public Workstation removeWorkstationMember(@PathVariable Long id, @RequestBody String member) {
         return workstationService.removeWorkstationMembers(id, member);
     }
 
-    // Get all workstations
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public List<Workstation> getAllWorkstation() {
         return workstationService.getAllWorkstations();
     }
 
-    // Find a workstation by id
     @GetMapping("/workstation/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public Workstation getWorkstationById(@PathVariable Long id) {
         return workstationService.getWorkstationById(id);
     }
 
-    // Delete workStation by id
     @DeleteMapping("/workstation/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteWorkstation(@PathVariable Long id) {
         workstationService.removeWorkstationById(id);
     }
 
-    // Add break log sheet
     @PostMapping("/workstation/{id}/breaklogsheet/add")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public Workstation addBreakLogSheet(@PathVariable Long id) {
         return workstationService.addBreakLogSheet(id);
     }
 
-    // Get BreakLogs for a specific Workstation
     @GetMapping("/workstation/{id}/breaklogs")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public List<BreakLog> getBreakLogsByWorkstationAndDate(@PathVariable Long id, @RequestParam String creationDate) {
         LocalDate parsedDate = LocalDate.parse(creationDate);
         return workstationService.getBreakLogsByWorkstationAndDate(id, parsedDate);

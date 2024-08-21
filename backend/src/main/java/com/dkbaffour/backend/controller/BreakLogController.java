@@ -3,6 +3,7 @@ package com.dkbaffour.backend.controller;
 import com.dkbaffour.backend.model.BreakLog;
 import com.dkbaffour.backend.service.BreakLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class BreakLogController {
 
     // Add a workstation member
     @PutMapping("/breaklog/update")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public BreakLog updateBreakLog(@RequestBody BreakLog breakLog) {
         Long id = breakLog.getId();
         LocalDateTime punchOut = breakLog.getPunchOut();
