@@ -1,0 +1,26 @@
+.sgn-cnt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+}
+.sgn-cnt h1 {
+    font-size: 30px;
+    font-weight: 500;
+}
+.sgn-sec {
+    width: 100%;
+}
+#cmp-sgn-cnt {
+    margin: 30px auto;
+}
+.lnk {
+    color: dodgerblue;
+}
+.lnk:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.nlnk {
+    color: #555;
+}

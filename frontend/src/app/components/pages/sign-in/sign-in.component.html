@@ -1,0 +1,93 @@
+<div>
+    @if(displaySignInForm) {
+    <div class="sgn-cnt">
+        <h1>Sign in to Timecard</h1>
+
+        <mat-form-field appearance="outline" class="sgn-sec">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="username@example_company.com">
+            <mat-icon matSuffix>mail</mat-icon>
+            <mat-hint></mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="sgn-sec">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="password">
+            <mat-icon matSuffix>key</mat-icon>
+            <mat-hint></mat-hint>
+        </mat-form-field>
+        <button mat-fab extended class="sgn-sec">Submit</button>
+    </div>
+    }
+
+    @if(!displaySignInForm) {
+    @if(!displayAdminForm){
+    <div class="sgn-cnt">
+        <h1>Register your company!</h1>
+
+        <mat-form-field appearance="outline" class="sgn-sec">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="example_company">
+            <mat-icon matSuffix>diversity_3</mat-icon>
+            <mat-hint></mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="sgn-sec">
+            <mat-label>Domain</mat-label>
+            <input matInput placeholder="example_company.com">
+            <mat-icon matSuffix>domain</mat-icon>
+            <mat-hint></mat-hint>
+        </mat-form-field>
+        <button mat-fab extended class="sgn-sec" (click)="companySignUpSubmit()">Submit</button>
+    </div>
+    }
+    @if(displayAdminForm) {
+    <div class="sgn-cnt">
+        <h1>Admin Sign Up</h1>
+        <p>You'll be granted admin previleges</p>
+
+        <mat-form-field appearance="outline" class="sgn-sec">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="first name">
+            <mat-icon matSuffix>abc</mat-icon>
+            <mat-hint></mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="sgn-sec">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="last name">
+            <mat-icon matSuffix>abc</mat-icon>
+            <mat-hint></mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="sgn-sec">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="username@example_company.com">
+            <mat-icon matSuffix>mail</mat-icon>
+            <mat-hint></mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="sgn-sec">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="password">
+            <mat-icon matSuffix>key</mat-icon>
+            <mat-hint></mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="sgn-sec">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput placeholder="confirm password">
+            <mat-icon matSuffix>key</mat-icon>
+            <mat-hint></mat-hint>
+        </mat-form-field>
+
+        <button mat-fab extended class="sgn-sec">Submit</button>
+    </div>
+    }
+    }
+
+    <div id="cmp-sgn-cnt" class="sgn-sec">
+        @if(!displayAdminForm){<small class="lnk" (click)="toggleFormDisplay()">{{lnkMsg}}</small> | }
+        <small class="nlnk">© Timecard</small>
+    </div>
+</div>
