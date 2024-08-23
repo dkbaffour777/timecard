@@ -13,7 +13,6 @@ import {
   WorkstationService,
   Workstation,
 } from '../../../services/workstation.service';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BottomSheetComponent } from '../../bottom-sheet/bottom-sheet.component';
 import { WorkstationSharedDataService } from '../../../services/workstation-shared-data.service';
@@ -27,7 +26,6 @@ import { WorkstationSharedDataService } from '../../../services/workstation-shar
   standalone: true,
   providers: [WorkstationService],
   imports: [
-    HttpClientModule,
     MatTableModule,
     MatToolbarModule,
     MatButtonModule,

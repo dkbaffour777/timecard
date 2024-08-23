@@ -1,7 +1,12 @@
 #page-container {
     display: flex;
     flex-direction: column;
+    align-self: stretch;
+    flex-basis: 100%;
+}
+#pg-cntt {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 9;
     justify-content: center;
-    align-items: center;
-    gap: 20px;
 }

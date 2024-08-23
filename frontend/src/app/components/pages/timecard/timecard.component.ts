@@ -9,7 +9,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { HttpClientModule } from '@angular/common/http';
 import {
   BreakLog,
   Workstation,
@@ -33,7 +32,6 @@ import { LoaderService } from '../../../services/loader.service';
     FormsModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    HttpClientModule,
   ],
   templateUrl: './timecard.component.html',
   styleUrl: './timecard.component.css',

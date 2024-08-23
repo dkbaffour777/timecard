@@ -1,12 +1,22 @@
+#auth-cnt {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    margin: auto;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
 .sgn-cnt {
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-self: center;
     width: 400px;
 }
 .sgn-cnt h1 {
     font-size: 30px;
     font-weight: 500;
+    margin: 50px auto;
 }
 .sgn-sec {
     width: 100%;

@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
@@ -32,7 +31,6 @@ import { WorkstationSharedDataService } from '../../services/workstation-shared-
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
-    HttpClientModule,
     FormsModule,
   ],
 })

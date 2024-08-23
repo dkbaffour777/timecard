@@ -1,4 +1,4 @@
-<div>
+<div id="auth-cnt">
     @if(displaySignInForm) {
     <div class="sgn-cnt">
         <h1>Sign in to Timecard</h1>
@@ -12,7 +12,7 @@
 
         <mat-form-field appearance="outline" class="sgn-sec">
             <mat-label>Password</mat-label>
-            <input matInput placeholder="password">
+            <input matInput placeholder="password" type="password">
             <mat-icon matSuffix>key</mat-icon>
             <mat-hint></mat-hint>
         </mat-form-field>
@@ -69,14 +69,14 @@
 
         <mat-form-field appearance="outline" class="sgn-sec">
             <mat-label>Password</mat-label>
-            <input matInput placeholder="password">
+            <input matInput placeholder="password" type="password">
             <mat-icon matSuffix>key</mat-icon>
             <mat-hint></mat-hint>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="sgn-sec">
             <mat-label>Confirm Password</mat-label>
-            <input matInput placeholder="confirm password">
+            <input matInput placeholder="confirm password" type="password">
             <mat-icon matSuffix>key</mat-icon>
             <mat-hint></mat-hint>
         </mat-form-field>
@@ -86,7 +86,7 @@
     }
     }
 
-    <div id="cmp-sgn-cnt" class="sgn-sec">
+    <div id="cmp-sgn-cnt">
         @if(!displayAdminForm){<small class="lnk" (click)="toggleFormDisplay()">{{lnkMsg}}</small> | }
         <small class="nlnk">© Timecard</small>
     </div>

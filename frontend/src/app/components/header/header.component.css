@@ -2,7 +2,8 @@
     width: 95vw;
     display: flex;
     justify-content: space-between;
-    margin: auto 20px;
+    margin: auto;
+    justify-self: flex-start;
 }
 .manage {
   display: flex;

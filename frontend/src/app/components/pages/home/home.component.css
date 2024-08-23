@@ -1,8 +1,13 @@
+#hm-cnt {
+    width: 50%;
+    min-width: 400px;
+    margin: auto;
+}
 .homepage-btn-container {
-    width: 22vw;
+    width: 20%;
     min-width: 250px;
     display: flex;
     gap: 20px;
     justify-content: space-between;
-    margin-top: 12vh;
+    margin-top: 50px;
 }

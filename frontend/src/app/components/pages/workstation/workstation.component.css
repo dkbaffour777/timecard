@@ -7,6 +7,7 @@ th, td {
   gap: 20px;
   width: 35vw;
   min-width: 500px;
+  margin: auto;
 }
 #workstation-header {
   display: flex;
