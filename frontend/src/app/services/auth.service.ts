@@ -21,6 +21,10 @@ export class AuthService {
     return !!localStorage.getItem('authToken');
   }
 
+  isLoggedIn(): boolean {
+    return this.hasToken();
+  }
+
   // Company Sign-Up
   signUpCompany(companyData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/companies/signup`, companyData);
