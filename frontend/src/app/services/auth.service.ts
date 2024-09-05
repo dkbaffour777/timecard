@@ -3,18 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   http = inject(HttpClient);
-  private baseUrl = `${environment.apiUrl}/auth`;
+  private baseUrl = `${environment.apiUrl}`;
+
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
-  
   isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
 
-  constructor() {}
+  private userSignedInSubject = new BehaviorSubject<userSignedIn | null>(null);
+  userSignedIn$ = this.userSignedInSubject.asObservable();
+
+  constructor(private router: Router) {}
 
 
   private hasToken(): boolean {
@@ -42,6 +46,10 @@ export class AuthService {
         if (response.token) {
           this.setToken(response.token);
           this.isAuthenticatedSubject.next(true); // Update authentication status
+          
+          localStorage.setItem('timecard_signedInUser_fullname', response.fullName);
+          localStorage.setItem('timecard_signedInUser_email', response.email);
+          this.userSignedInSubject.next({fullName: response.fullName, email: response.email});
         }
         return response;
       })
@@ -58,9 +66,25 @@ export class AuthService {
     return localStorage.getItem('authToken');
   }
 
-  // Log out
+  getSignedInUser(): userSignedIn | null {
+    const user: userSignedIn = {
+      fullName: localStorage.getItem('timecard_signedInUser_fullname'),
+      email: localStorage.getItem('timecard_signedInUser_email')
+    }
+    return user;
+  }
+
+  // User Logout
   logout(): void {
     localStorage.removeItem('authToken');
-    this.isAuthenticatedSubject.next(false); // Update authentication status
+    localStorage.removeItem('timecard_signedInUser_fullname');
+    localStorage.removeItem('timecard_signedInUser_email');
+    this.isAuthenticatedSubject.next(false);
+    this.router.navigate(['/signin']);
   }
+}
+
+interface userSignedIn {
+  fullName: string | null,
+  email: string | null
 }

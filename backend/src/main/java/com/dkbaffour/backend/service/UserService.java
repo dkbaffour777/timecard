@@ -14,6 +14,7 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private RoleRepository roleRepository;
 
@@ -39,8 +40,6 @@ public class UserService {
         // Save the user entity
         return userRepository.save(user);
     }
-
-
 
     public List<User> getAllUsers() {
         return userRepository.findAll();

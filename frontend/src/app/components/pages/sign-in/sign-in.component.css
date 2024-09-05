@@ -23,6 +23,8 @@
 }
 #cmp-sgn-cnt {
     margin: 30px auto;
+    display: flex;
+    gap: 5px;
 }
 .lnk {
     color: dodgerblue;

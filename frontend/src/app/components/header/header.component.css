@@ -11,10 +11,11 @@
   gap: 20px;
   align-items: center;
 }
-.ng-tns-c1923052698-0 {
+#acc-mng-menu {
     display: flex;
     flex-direction: column;
     gap: 20px;
     justify-content: center;
-    align-items: center;
+    width: 200px;
+    padding: 20px;
 }

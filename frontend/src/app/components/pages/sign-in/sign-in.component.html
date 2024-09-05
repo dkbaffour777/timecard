@@ -1,93 +1,113 @@
 <div id="auth-cnt">
-    @if(displaySignInForm) {
-    <div class="sgn-cnt">
-        <h1>Sign in to Timecard</h1>
+    <!-- Sign In Form -->
+    <div *ngIf="displaySignInForm" class="sgn-cnt">
+        <h1>Sign in to Timecard!</h1>
+        <form [formGroup]="signInForm" (ngSubmit)="onSignInSubmit()">
+            <mat-form-field appearance="outline" class="sgn-sec">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" placeholder="username@example_company.com">
+                <mat-icon matSuffix>mail</mat-icon>
+                <mat-error *ngIf="signInForm.get('email')?.invalid && signInForm.get('email')?.touched">
+                    Please enter a valid email.
+                </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="sgn-sec">
-            <mat-label>Email</mat-label>
-            <input matInput placeholder="username@example_company.com">
-            <mat-icon matSuffix>mail</mat-icon>
-            <mat-hint></mat-hint>
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="sgn-sec">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password" placeholder="password" type="password">
+                <mat-icon matSuffix>key</mat-icon>
+                <mat-error *ngIf="signInForm.get('password')?.invalid && signInForm.get('password')?.touched">
+                    Password is required.
+                </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="sgn-sec">
-            <mat-label>Password</mat-label>
-            <input matInput placeholder="password" type="password">
-            <mat-icon matSuffix>key</mat-icon>
-            <mat-hint></mat-hint>
-        </mat-form-field>
-        <button mat-fab extended class="sgn-sec">Submit</button>
+            <button mat-fab extended class="sgn-sec" type="submit" [disabled]="signInForm.invalid">Submit</button>
+        </form>
     </div>
-    }
 
-    @if(!displaySignInForm) {
-    @if(!displayAdminForm){
-    <div class="sgn-cnt">
+    <!-- Company Sign Up Form -->
+    <div *ngIf="!displaySignInForm && !displayAdminForm" class="sgn-cnt">
         <h1>Register your company!</h1>
+        <form [formGroup]="companyForm" (ngSubmit)="companySignUpSubmit()">
+            <mat-form-field appearance="outline" class="sgn-sec">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" placeholder="example_company" (input)="onNameInput()">
+                <mat-icon matSuffix>diversity_3</mat-icon>
+                <mat-error *ngIf="companyForm.get('name')?.invalid && companyForm.get('name')?.touched">
+                    Company name is required.
+                </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="sgn-sec">
-            <mat-label>Name</mat-label>
-            <input matInput placeholder="example_company">
-            <mat-icon matSuffix>diversity_3</mat-icon>
-            <mat-hint></mat-hint>
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="sgn-sec">
+                <mat-label>Domain</mat-label>
+                <input matInput formControlName="domain" placeholder=".com">
+                <mat-icon matSuffix>domain</mat-icon>
+                <mat-error *ngIf="companyForm.get('domain')?.invalid && companyForm.get('domain')?.touched">
+                    Domain is required.
+                </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="sgn-sec">
-            <mat-label>Domain</mat-label>
-            <input matInput placeholder="example_company.com">
-            <mat-icon matSuffix>domain</mat-icon>
-            <mat-hint></mat-hint>
-        </mat-form-field>
-        <button mat-fab extended class="sgn-sec" (click)="companySignUpSubmit()">Submit</button>
+            <button mat-fab extended class="sgn-sec" type="submit" [disabled]="companyForm.invalid">Submit</button>
+        </form>
     </div>
-    }
-    @if(displayAdminForm) {
-    <div class="sgn-cnt">
+
+    <!-- Admin Sign Up Form -->
+    <div *ngIf="!displaySignInForm && displayAdminForm" class="sgn-cnt">
         <h1>Admin Sign Up</h1>
-        <p>You'll be granted admin previleges</p>
+        <p>You'll be granted admin privileges</p>
+        <form [formGroup]="adminForm" (ngSubmit)="adminSignUpSubmit()">
+            <mat-form-field appearance="outline" class="sgn-sec">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName" placeholder="first name">
+                <mat-icon matSuffix>abc</mat-icon>
+                <mat-error *ngIf="adminForm.get('firstName')?.invalid && adminForm.get('firstName')?.touched">
+                    First name is required.
+                </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="sgn-sec">
-            <mat-label>First Name</mat-label>
-            <input matInput placeholder="first name">
-            <mat-icon matSuffix>abc</mat-icon>
-            <mat-hint></mat-hint>
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="sgn-sec">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName" placeholder="last name">
+                <mat-icon matSuffix>abc</mat-icon>
+                <mat-error *ngIf="adminForm.get('lastName')?.invalid && adminForm.get('lastName')?.touched">
+                    Last name is required.
+                </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="sgn-sec">
-            <mat-label>Last Name</mat-label>
-            <input matInput placeholder="last name">
-            <mat-icon matSuffix>abc</mat-icon>
-            <mat-hint></mat-hint>
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="sgn-sec">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" placeholder="username@example_company.com">
+                <mat-icon matSuffix>mail</mat-icon>
+                <mat-error *ngIf="adminForm.get('email')?.invalid && adminForm.get('email')?.touched">
+                    Please enter a valid email.
+                </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="sgn-sec">
-            <mat-label>Email</mat-label>
-            <input matInput placeholder="username@example_company.com">
-            <mat-icon matSuffix>mail</mat-icon>
-            <mat-hint></mat-hint>
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="sgn-sec">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password" placeholder="password" type="password">
+                <mat-icon matSuffix>key</mat-icon>
+                <mat-error *ngIf="adminForm.get('password')?.invalid && adminForm.get('password')?.touched">
+                    Password must be at least 6 characters long.
+                </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="sgn-sec">
-            <mat-label>Password</mat-label>
-            <input matInput placeholder="password" type="password">
-            <mat-icon matSuffix>key</mat-icon>
-            <mat-hint></mat-hint>
-        </mat-form-field>
+            <mat-form-field appearance="outline" class="sgn-sec">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput formControlName="confirmPassword" placeholder="confirm password" type="password">
+                <mat-icon matSuffix>key</mat-icon>
+                <mat-error *ngIf="adminForm.hasError('passwordMismatch') && adminForm.get('confirmPassword')?.touched">
+                    Passwords do not match.
+                </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="sgn-sec">
-            <mat-label>Confirm Password</mat-label>
-            <input matInput placeholder="confirm password" type="password">
-            <mat-icon matSuffix>key</mat-icon>
-            <mat-hint></mat-hint>
-        </mat-form-field>
-
-        <button mat-fab extended class="sgn-sec">Submit</button>
+            <button mat-fab extended class="sgn-sec" type="submit" [disabled]="adminForm.invalid">Submit</button>
+        </form>
     </div>
-    }
-    }
 
     <div id="cmp-sgn-cnt">
-        @if(!displayAdminForm){<small class="lnk" (click)="toggleFormDisplay()">{{lnkMsg}}</small> | }
+        <small class="lnk" (click)="toggleFormDisplay()" *ngIf="!displayAdminForm">{{ lnkMsg }}</small>
+        <span>|</span>
         <small class="nlnk">© Timecard</small>
     </div>
 </div>

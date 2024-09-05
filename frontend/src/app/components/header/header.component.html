@@ -3,19 +3,23 @@
   <span>Timecard</span>
   <span class="manage">
     <a routerLink="/home">
-      <button mat-icon-button aria-label="home">
+      <button mat-icon-button aria-label="home" matTooltip="Home">
         <mat-icon>home</mat-icon>
       </button>
     </a>
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Account manager">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Account manager" matTooltip="Account Manager">
       <mat-icon>person</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <p style="width: 100px;">Hi, {{ user }}</p>
-      <div>
-        <button mat-icon-button aria-label="Logout">
-          <mat-icon>logout</mat-icon>
-        </button>
+      <div id="acc-mng-menu">
+        <div>Hi, {{ fullName }}</div>
+        <div>{{ email }}</div>
+        <div>
+          <button mat-icon-button aria-label="Sign Out" matTooltip="Sign Out" (click)="onLogout()"
+            *ngIf="isAuthenticated">
+            <mat-icon>logout</mat-icon>
+          </button>
+        </div>
       </div>
     </mat-menu>
   </span>
