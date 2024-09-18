@@ -1,5 +1,7 @@
 package com.dkbaffour.backend.service;
 
+import com.dkbaffour.backend.dto.EntityToDTOMapper;
+import com.dkbaffour.backend.dto.UserDTO;
 import com.dkbaffour.backend.model.Role;
 import com.dkbaffour.backend.model.User;
 import com.dkbaffour.backend.repository.RoleRepository;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -18,6 +21,10 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private EntityToDTOMapper entityToDTOMapper;
+
+    // Save a user and return UserDTO
     public User saveUser(User user) {
         if (user.getRole() == null || user.getRole().getName() == null) {
             throw new IllegalArgumentException("Role is required");
@@ -41,12 +48,19 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    // Get all users and return as UserDTO list
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(entityToDTOMapper::convertToUserDTO)
+                .collect(Collectors.toList());
     }
 
-    public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    // Get user by ID and return as UserDTO
+    public UserDTO getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return entityToDTOMapper.convertToUserDTO(user);
     }
 
     public User getUserByEmail(String email) {

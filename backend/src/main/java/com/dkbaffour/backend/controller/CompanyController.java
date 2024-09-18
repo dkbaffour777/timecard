@@ -1,5 +1,6 @@
 package com.dkbaffour.backend.controller;
 
+import com.dkbaffour.backend.dto.CompanyDTO;
 import com.dkbaffour.backend.model.Company;
 import com.dkbaffour.backend.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +19,21 @@ public class CompanyController {
 
     // Sign up a new company
     @PostMapping("/signup")
-    public Company signUpCompany(@RequestBody Company company) {
+    public CompanyDTO signUpCompany(@RequestBody Company company) {
         return companyService.saveCompany(company);
     }
 
     // Get all companies
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public List<Company> getAllCompanies() {
+    public List<CompanyDTO> getAllCompanies() {
         return companyService.getAllCompanies();
     }
 
     // Get company by id
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public Company getCompanyById(@PathVariable Long id) {
+    public CompanyDTO getCompanyById(@PathVariable Long id) {
         return companyService.getCompanyById(id);
     }
 }
