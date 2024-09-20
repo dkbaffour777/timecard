@@ -1,5 +1,6 @@
 package com.dkbaffour.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,6 +37,7 @@ public class BreakLog {
     @JoinColumn(name = "workstation_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @JsonBackReference
     private Workstation workstation;
 
     @Column(updatable = false)
